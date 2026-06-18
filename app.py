@@ -9,7 +9,7 @@ import os
 # ============================================
 # KONFIGURASI
 # ============================================
-MODEL_PATH = "ikan_model_deploy.pt"
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "ikan_model_deploy.pt")
 IMG_SIZE = 224
 NUM_CLASSES = 3
 CLASS_NAMES = [
@@ -28,28 +28,18 @@ CLASS_INFO = {
 # ============================================
 # FUNGSI LOAD MODEL
 # ============================================
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "ikan_model_deploy.pt")
+
 @st.cache_resource
 def load_model():
-    """Load model PyTorch dari file .pth (state_dict)."""
-    device = torch.device('cpu')
-
-    # Bangun ulang arsitektur model (sama persis dengan saat training)
-    base_model = models.mobilenet_v2(weights=None)
-    in_features = base_model.classifier[1].in_features
-    base_model.classifier = nn.Sequential(
-        nn.Dropout(0.3),
-        nn.Linear(in_features, 256),
-        nn.ReLU(),
-        nn.Dropout(0.3),
-        nn.Linear(256, NUM_CLASSES)
-    )
-
-    # Load checkpoint
-    checkpoint = torch.load(MODEL_PATH, map_location=device, weights_only=False)
-    base_model.load_state_dict(checkpoint['model_state_dict'])
-    base_model.eval()
-    return base_model, device
-
+    # Tentukan device (cuda atau cpu)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    
+    # LOAD MODEL TORCHSCRIPT LANGSUNG DI SINI
+    model = torch.jit.load(MODEL_PATH, map_location=device)
+    model.eval()
+    
+    return model, device
 
 def preprocess_image(image: Image.Image):
     """Preprocess gambar sesuai format input MobileNetV2."""
