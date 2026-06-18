@@ -9,7 +9,7 @@ import os
 # ============================================
 # KONFIGURASI
 # ============================================
-MODEL_PATH = "ikan_model_deploy.pth"
+MODEL_PATH = "ikan_model_deploy.pt"
 IMG_SIZE = 224
 NUM_CLASSES = 3
 CLASS_NAMES = [
