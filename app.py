@@ -169,7 +169,6 @@ if uploaded_file is not None:
     st.subheader(" Probabilitas Setiap Kelas")
     for cls_name, prob in sorted(all_probs.items(), key=lambda x: x[1], reverse=True):
         cls_info = CLASS_INFO[cls_name]
-        st.markdown(f"**{cls_info['emoji']} {cls_name}**")
         st.progress(prob / 100)
         st.caption(f"{prob:.2f}%")
 
