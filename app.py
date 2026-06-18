@@ -157,7 +157,6 @@ if uploaded_file is not None:
         st.markdown(
             f"""
             <div class="result-box" style="background-color: {info['color']}22; border: 2px solid {info['color']};">
-                <div style="font-size: 3rem;">{info['emoji']}</div>
                 <div style="font-size: 1.5rem; font-weight: 700; color: {info['color']};">{predicted_class}</div>
                 <div style="font-size: 1rem; margin-top: 0.5rem;">Confidence: <b>{confidence:.1f}%</b></div>
                 <div style="font-size: 0.9rem; margin-top: 0.3rem; color: #555;">{info['status']}</div>
